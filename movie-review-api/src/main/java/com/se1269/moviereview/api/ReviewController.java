@@ -17,11 +17,11 @@ public class ReviewController {
 
     @GetMapping
     public List<Review> getByMovieId(@RequestParam int movieId){
-        return null;
+        return reviewService.getReviewsByMovieId(movieId);
     }
 
     @PostMapping
-    public Review insertReview(){
-        return null;
+    public Review insertReview(Review review){
+        return reviewService.addReview(review);
     }
 }
