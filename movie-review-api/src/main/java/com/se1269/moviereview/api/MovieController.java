@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/movies")
 public class MovieController {
@@ -45,7 +45,7 @@ public class MovieController {
     }
 
     @DeleteMapping
-    public ResponseEntity deleteMovie(int id){
+    public ResponseEntity deleteMovie(@PathVariable int id){
         movieService.deleteById(id);
         return new ResponseEntity("success", HttpStatus.OK);
     }
