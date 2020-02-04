@@ -1,1 +1,115 @@
-<p>movie-details-page works!</p>
+
+<div class="container">
+    <h2 class="my-4">{{ pageTitle }}</h2>
+    <hr>
+    <div class="row">
+        <div class="col-lg-8 mx-auto" *ngIf="!isLoading && !notfound">
+            <div class="card">
+                <div class="card-body">
+                    <form (submit)="save($event)">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="txtTitle">Title</label>
+                                    <input 
+                                        type="text" 
+                                        id="txtTitle"
+                                        name="title"
+                                        class="form-control" 
+                                        placeholder="Ex: Avengers Endgame" 
+                                        [(ngModel)]="movie.title">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="txtCategories">Categories</label>
+                                    <input 
+                                        type="text" 
+                                        id="txtCategories" 
+                                        name="categories"
+                                        class="form-control" 
+                                        placeholder="Ex: Science Fiction" 
+                                        [(ngModel)]="movie.categories">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="txtDescription">Released date</label>
+                                    <input 
+                                        type="date"
+                                        id="txtStartDate" 
+                                        name="startDate"
+                                        class="form-control" 
+                                        [(ngModel)]="movie.startDate">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="txtDescription">Description</label>
+                                    <textarea 
+                                        rows="3"
+                                        id="txtDescription" 
+                                        name="description"
+                                        class="form-control" 
+                                        placeholder="Great movie..." 
+                                        [(ngModel)]="movie.description"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="txtDirectors">Directors</label>
+                                    <input 
+                                        type="text" 
+                                        id="txtDirectors" 
+                                        name="directors"
+                                        class="form-control" 
+                                        placeholder="Anthony Russo, Joe Russo" 
+                                        [(ngModel)]="movie.directors">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="txtActors">Actors</label>
+                                    <input 
+                                        type="text" 
+                                        id="txtActors" 
+                                        name="actors"
+                                        class="form-control" 
+                                        placeholder="Robert Downy Jr, Chris Evan" 
+                                        [(ngModel)]="movie.actors">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="txtImage">Image Url</label>
+                                    <input 
+                                        type="text" 
+                                        id="txtImage" 
+                                        name="image"
+                                        class="form-control" 
+                                        placeholder="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQA_-tL18_rj9zEcjN6n41NEaJm-kRNF9UeOtvksZ4z_OW6jRA9" 
+                                        [(ngModel)]="movie.image">
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 mx-auto">
+                                        <img src="{{ movie.image }}" alt="{{ movie.title }}" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" mdbWavesEffect mdbBtn class="btn btn-success float-right mt-3">Save</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-12" *ngIf="!isLoading && notfound">
+            <app-notfound [message]="'Can not find this movie'" ></app-notfound>
+        </div>
+        <div class="col-12 text-center" *ngIf="isLoading">
+            <app-my-loader></app-my-loader>
+        </div>
+    </div>
+</div> 
+

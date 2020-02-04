@@ -35,7 +35,19 @@ public class MovieService {
     }
 
     public Movie update(Movie movie){
-        return movieRepository.save(movie);
+        Movie found = movieRepository.findById(movie.getId()).get();
+        if(found != null){
+            found.setCategories(movie.getCategories());
+            found.setStartDate(movie.getStartDate());
+            found.setImage(movie.getImage());
+            found.setTitle(movie.getTitle());
+            found.setDescription(movie.getDescription());
+            found.setActors(movie.getActors());
+            found.setDirectors(movie.getDirectors());
+            return movieRepository.save(found);
+        }
+        return null;
+
     }
 
     public Page<Movie> getPaginationList(String keyword, int page, int itemsPerPage){

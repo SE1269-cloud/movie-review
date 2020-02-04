@@ -39,7 +39,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity insertMovie(Movie movie){
+    public ResponseEntity insertMovie(@RequestBody Movie movie){
         Movie movie1 = movieService.insert(movie);
         return new ResponseEntity<Movie>(movie1, HttpStatus.OK);
     }
@@ -51,7 +51,7 @@ public class MovieController {
     }
 
     @PutMapping
-    public ResponseEntity updateMovie(Movie movie){
+    public ResponseEntity updateMovie(@RequestBody Movie movie){
         Movie movie1 = movieService.update(movie);
         return new ResponseEntity<Movie>(movie1, HttpStatus.OK);
     }

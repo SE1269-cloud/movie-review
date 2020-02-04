@@ -9,12 +9,10 @@ import { MovieService } from '../../services/movie.service';
 export class MoviesPageComponent implements OnInit {
 
   movies = [];
-  filters = { keyword: '', page: 1, itemsPerPage: 12 };
+  filters = { keyword: '' };
+  pagination = { page: 1, itemsPerPage: 18, totalPages: 0 };
   totalMovies = 0;
-  totalPages = 0;
-  canLoadMoreMovies: boolean = false;
   isLoading: boolean = false;
-  pages = [];
   timeout = null;
 
   constructor(private movieService: MovieService) { }
@@ -26,14 +24,14 @@ export class MoviesPageComponent implements OnInit {
   async getMovies(){
     this.isLoading = true;
      try {
-      const res: any = await this.movieService.getMovies(this.filters);
-      this.movies = res.content;
-      this.totalMovies = res.totalElements;
-      this.totalPages = res.totalPages;
-      this.pages = Array(this.totalPages).fill(0).map((x, i) => i + 1);
-      if(res.last) this.canLoadMoreMovies = false;
+        const { keyword } = this.filters;
+        const { page, itemsPerPage } = this.pagination;
+        const res: any = await this.movieService.getMovies({ keyword, page, itemsPerPage });
+        this.movies = res.content;
+        this.totalMovies = res.totalElements;
+        this.pagination = { ...this.pagination, totalPages: res.totalPages }
 
-      console.log(res);
+        console.log(res);
      } catch (error) {
        console.log(error);
      }
@@ -41,14 +39,15 @@ export class MoviesPageComponent implements OnInit {
   }
 
   changePage(page){
-    this.filters = { ...this.filters, page: page };
+    this.pagination = { ...this.pagination, page: page };
     this.getMovies();
   }
 
   changeKeyword(e){
-    this.filters = { ...this.filters, keyword: e.target.value, page: 1 };
+    this.filters = { ...this.filters, keyword: e.target.value };
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
+      this.pagination = { ...this.pagination, page: 1 };
       this.getMovies();
     }, 300);
   }
