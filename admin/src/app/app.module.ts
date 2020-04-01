@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { MoviesPageComponent } from './pages/movies-page/movies-page.component';
@@ -17,12 +18,17 @@ import { MyPaginationComponent } from './components/my-pagination.component';
 import { MyFooterComponent } from './components/my-footer.component';
 
 import { MovieService } from './services/movie.service';
+import { UserService } from './services/user.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { LoginPageComponent } from './pages/login/login-page/login-page.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 const routes: Routes = [
-  { path: '', component: MoviesPageComponent },
-  { path: 'movies', component: MoviesPageComponent },
-  { path: 'movies/details/:movieId', component: MovieDetailsPageComponent },
-  { path: 'movies/insert', component: MovieDetailsPageComponent },
+  { path: '', component: MoviesPageComponent, canActivate: [AuthGuardService] },
+  { path: 'login', component: LoginPageComponent },
+  { path: 'movies', component: MoviesPageComponent,  canActivate: [AuthGuardService] },
+  { path: 'movies/details/:movieId', component: MovieDetailsPageComponent, canActivate: [AuthGuardService] },
+  { path: 'movies/insert', component: MovieDetailsPageComponent, canActivate: [AuthGuardService] },
 ]
 
 @NgModule({
@@ -35,7 +41,8 @@ const routes: Routes = [
     NotfoundComponent,
     MyNavbarComponent,
     MyPaginationComponent,
-    MyFooterComponent
+    MyFooterComponent,
+    LoginPageComponent
     
   ],
   imports: [
@@ -47,7 +54,14 @@ const routes: Routes = [
     SweetAlert2Module.forRoot()
   ],
   providers: [
-    MovieService
+    MovieService,
+    UserService,
+    // AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

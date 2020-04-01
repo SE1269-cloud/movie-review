@@ -30,8 +30,6 @@ export class MoviesPageComponent implements OnInit {
         this.movies = res.content;
         this.totalMovies = res.totalElements;
         this.pagination = { ...this.pagination, totalPages: res.totalPages }
-
-        console.log(res);
      } catch (error) {
        console.log(error);
      }
