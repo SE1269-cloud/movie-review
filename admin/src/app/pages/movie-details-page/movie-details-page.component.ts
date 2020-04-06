@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { ValidationUtils } from '../../utils/validation';
 import { AlertUtils } from '../../utils/alert';
@@ -13,13 +13,13 @@ import { AlertUtils } from '../../utils/alert';
 export class MovieDetailsPageComponent implements OnInit {
   // @ViewChild('myswal', { read: false, static: true }) myswal: SwalComponent;
 
-  movie = {};
+  movie: any = {};
   isLoading: boolean = false;
   notfound: boolean = false;
   isInsertMovie: boolean = true;
   pageTitle: string = 'Insert Movies'
 
-  constructor(private movieService: MovieService, private router: ActivatedRoute) { }
+  constructor(private movieService: MovieService, private router: ActivatedRoute, private myRouter: Router) { }
 
   ngOnInit() {
    
@@ -45,6 +45,44 @@ export class MovieDetailsPageComponent implements OnInit {
       this.notfound = true;
     }
     this.isLoading = false;
+  }
+
+  async handleDelete(){
+    const result = await AlertUtils.showConfirm({
+      title: 'Are you sure?',
+      text: this.movie.title + ' will be deleted forever!'
+    });
+    if(result.value){
+      try {
+        const res = await this.movieService.delete(this.movie.id);
+        console.log(res);
+        if(ValidationUtils.isEmpty(res)){
+          AlertUtils.showAlert({ 
+            icon: 'error', 
+            title: 'Error', 
+            text: 'Movie not found', 
+            timer: 2000 
+          })
+        } else {
+          AlertUtils.showAlert({ 
+            icon: 'success', 
+            title: 'Success', 
+            text: 'You have deleted '+ this.movie.title +'!', 
+            timer: 2000 
+          })
+        }
+       
+        window.setTimeout(() => this.myRouter.navigate(['movies']), 1000);
+      } catch (error) {
+        console.log(error);
+        AlertUtils.showAlert({ 
+          icon: 'error', 
+          title: 'Oops...', 
+          text: 'Can not delete this movie for some reasons!', 
+          timer: 4000 
+        })
+      }
+    }
   }
 
   async save(e){

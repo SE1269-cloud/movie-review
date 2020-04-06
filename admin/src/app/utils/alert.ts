@@ -6,4 +6,16 @@ export class AlertUtils{
             icon, title, text, timer
         })
     }
+
+    static showConfirm({ title, text }){
+        return Swal.fire({
+            title: title,
+            text: text,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          })
+    }
 }

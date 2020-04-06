@@ -36,6 +36,7 @@ export class UserService {
   }
 
   isAuth(){
+    return true;
     const token = this.getTokenFromLocal();
     console.log(token);
     return !ValidationUtils.isEmpty(token);

@@ -99,6 +99,13 @@
                         </div>
                         
                         <button type="submit" mdbWavesEffect mdbBtn class="btn btn-success float-right mt-3">Save</button>
+                        <button type="button" 
+                            *ngIf="!isInsertMovie"
+                            mdbWavesEffect mdbBtn 
+                            (click)="handleDelete()"
+                            class="btn btn-danger float-right mt-3">
+                            Delete
+                        </button>
                     </form>
                 </div>
             </div>
