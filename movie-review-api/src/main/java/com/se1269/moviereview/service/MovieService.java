@@ -30,8 +30,11 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public void deleteById(int id){
-        movieRepository.deleteById(id);
+    public Movie deleteById(int id){
+        Movie movie = movieRepository.findById(id).orElse(null);
+        if(movie == null) return null;
+        movieRepository.delete(movie);
+        return movie;
     }
 
     public Movie update(Movie movie){
