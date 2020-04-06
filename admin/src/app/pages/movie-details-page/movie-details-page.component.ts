@@ -71,7 +71,6 @@ export class MovieDetailsPageComponent implements OnInit {
             timer: 2000 
           })
         }
-       
         window.setTimeout(() => this.myRouter.navigate(['movies']), 1000);
       } catch (error) {
         console.log(error);
