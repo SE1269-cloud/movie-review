@@ -23,7 +23,7 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
-    @GetMapping("/insert-movies")
+    @PostMapping("/insert-movies")
     public ResponseEntity insertMovies(){
         List<Movie> moviesList = MovieAPIUtils.getDataFromMovieDBAPI();
         List<Movie> insertedMoviesList = new ArrayList<>();
