@@ -60,8 +60,8 @@
         <version>1.9.0</version>  
         <configuration>
           <schemaVersion>V2</schemaVersion>
-          <resourceGroup>thanhresource</resourceGroup>
-          <appName>movie-review</appName>
+          <resourceGroup>movieReview</resourceGroup>
+          <appName>movie-review-pro</appName>
           <pricingTier>F1</pricingTier>
           <region>southeastasia</region>
           <runtime>
