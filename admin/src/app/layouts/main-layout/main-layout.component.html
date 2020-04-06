@@ -1,4 +1,4 @@
-<app-my-navbar></app-my-navbar>
+<app-my-navbar *ngIf="isAuth"></app-my-navbar>
 <div class="main-content">
     <ng-content></ng-content>
 </div>
