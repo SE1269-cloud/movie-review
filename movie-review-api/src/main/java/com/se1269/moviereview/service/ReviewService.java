@@ -19,6 +19,7 @@ public class ReviewService {
     }
 
     public Review addReview(Review review) {
+        review.setId(0);
         return reviewRepository.save(review);
     }
 }
